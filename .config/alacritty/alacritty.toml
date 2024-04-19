@@ -1,0 +1,23 @@
+import = ["~/.config/alacritty/themes/themes/challenger_deep.toml"]
+[font]
+size = 10
+[font.normal]
+family = "Cartograph CF"
+style = "Regular"
+
+[font.italic]
+family = "Cartograph CF"
+style = "Italic"
+
+[font.bold]
+family = "Cartograph CF"
+style = "Bold"
+
+[window]
+opacity = 0.9
+[window.padding]
+x = 10
+y = 10
+
+[colors]
+transparent_background_colors = true
