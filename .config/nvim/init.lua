@@ -58,11 +58,21 @@ require('packer').startup(function(use)
     'echasnovski/mini.map',
     branch = 'stable',
   }
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'nvim-tree/nvim-web-devicons', opt = true }
+  }
+
+  use 'nvim-treesitter/nvim-treesitter-context'
+
+  use 'ray-x/lsp_signature.nvim'
+
 
 end)
 
 -- General settings
 -- Numeración relativa de líneas
+-- -- Lualine 
 vim.g.mapleader = ","  -- Define la barra espaciadora como tecla Leader
 vim.o.number = true        -- Activa la numeración de líneas
 vim.o.relativenumber = true -- Activa la numeración relativa
@@ -95,7 +105,7 @@ vim.api.nvim_set_keymap('n', '<Leader>m', ':lua MiniMap.toggle()<CR>', { noremap
 -- Load and configure Catppuccin theme
 require("catppuccin").setup({
   flavour = "mocha", -- You can also choose "latte", "frappe", or "macchiato"
-  transparent_background = false,
+  transparent_background = true,
   term_colors = true,
   integrations = {
     treesitter = true,
@@ -138,7 +148,6 @@ require('mason-lspconfig').setup({
 })
 
 -- LSP server settings
-local lspconfig = require('lspconfig')
 local cmp = require('cmp')
 local cmp_lsp = require('cmp_nvim_lsp')
 local capabilities = cmp_lsp.default_capabilities()
@@ -155,6 +164,13 @@ cmp.setup({
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping.complete(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-k>'] = cmp.mapping(function(fallback)
+      if vim.fn.pumvisible() == 1 then
+        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+      else
+        vim.lsp.buf.hover()
+      end
+    end, { "i", "s" }),
   }),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
@@ -162,6 +178,17 @@ cmp.setup({
   }, {
     { name = 'buffer' },
   })
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+    vim.lsp.buf.format({ async = false })  -- Formatea el código antes de guardar
+    vim.lsp.buf.code_action({
+      context = { only = { "source.organizeImports" } }, -- Limpia los imports
+      apply = true
+    })
+  end
 })
 
 
@@ -240,11 +267,63 @@ require('nvim-web-devicons').setup {
   default = true;
 }
 
+-- Lualine 
+require('lualine').setup {
+  options = {
+    theme = 'catppuccin',
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    icons_enabled = true,
+  },
+  sections = {
+    lualine_a = { 'mode' },
+    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_c = { 'filename' },
+    lualine_x = { 'encoding', 'fileformat', 'filetype' },
+    lualine_y = { 'progress' },
+    lualine_z = { 'location' }
+  },
+}
+
+-- Treesitter context
+require'treesitter-context'.setup{
+  enable = true,  -- Activa el plugin
+  max_lines = 5,  -- Máximo de líneas que se mostrarán en el encabezado
+  trim_scope = 'outer', -- Elimina líneas innecesarias si el espacio es reducido
+  mode = 'cursor',  -- Muestra el contexto de la función actual
+}
+
+lspconfig.gopls.setup {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    -- Activar firma de funciones
+    require("lsp_signature").on_attach({
+      bind = true,  -- Muestra la firma mientras escribes
+      floating_window = true,  -- Usa una ventana flotante para mostrar la firma
+      hint_enable = false,  -- Desactiva los hints en línea si molestan
+      handler_opts = {
+        border = "rounded"  -- Borde redondeado para la ventana flotante
+      }
+    }, bufnr)
+
+    -- Autoformateo al guardar
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = "*.go",
+      callback = function()
+        vim.lsp.buf.format({ async = false })
+        vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
+      end
+    })
+  end
+}
+
+
 -- Keybindings comunes
 vim.api.nvim_set_keymap('n', '<Leader>ff', ':Telescope find_files<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>fg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>fb', ':Telescope buffers<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<Leader>fh', ':Telescope help_tags<CR>', { noremap = true, silent = true })
+
 
 -- Keybindings:
 -- <Leader>e : Toggle file explorer
