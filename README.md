@@ -8,6 +8,10 @@ I got tired of i3 since wanted to learn to use my split keyboard, nvim and tmux.
 
 Maybe someday I'll go back to i3wm once I master tmux and neovim and became a terminal God (xd).
 
+# How it looks
+
+![Yeah, I use Arch BTW xd](./img/arch.png)
+
 
 ```txt
          _nnnn_                      
