@@ -1,5 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=xRandR autostart
-Comment=Start xrandr with settings done in ARandR
-Exec=/home/ivanovsky/.screenlayout/default.sh

@@ -1,16 +1,22 @@
-import = ["~/.config/alacritty/themes/themes/challenger_deep.toml"]
+[general]
+import = [
+  "~/.config/alacritty/themes/themes/challenger_deep.toml",
+  "~/.config/alacritty/catppuccin-latte.toml"
+]
+[terminal.shell]
+program = "/bin/zsh"
 [font]
 size = 10
 [font.normal]
-family = "Cartograph CF"
+family = "CartographCF Nerd Font Plus Font Awesome Plus Font Awesome Extension Plus Octicons Plus Power Symbols Plus Codicons Plus Pomicons Plus Font Logos Plus Material Design Icons Plus Weather Icons"
 style = "Regular"
 
 [font.italic]
-family = "Cartograph CF"
+family = "CartographCF Nerd Font Plus Font Awesome Plus Font Awesome Extension Plus Octicons Plus Power Symbols Plus Codicons Plus Pomicons Plus Font Logos Plus Material Design Icons Plus Weather Icons"
 style = "Italic"
 
 [font.bold]
-family = "Cartograph CF"
+family = "CartographCF Nerd Font Plus Font Awesome Plus Font Awesome Extension Plus Octicons Plus Power Symbols Plus Codicons Plus Pomicons Plus Font Logos Plus Material Design Icons Plus Weather Icons"
 style = "Bold"
 
 [window]
@@ -21,3 +27,4 @@ y = 10
 
 [colors]
 transparent_background_colors = true
+

@@ -1,13 +1,15 @@
 # Dotfiles
 
-Here I'll place my dotfiles for my setup in a machine with EndeavourOS and i3wm as window manager (I'm in love with tiling window managers, and this one was not that bad to work with an NVIDIA GPU).
+Here I'll place my dotfiles for my setup for whatever distro I'll use. 
 
-This config isn't ready yet, since I just configured neovim to work with Golang. I'll add support for other programing languages such as Python, Typescript, Rust and C.
+By now I'm using Arch Linux with Gnome, the `setup.sh` script will use `pacman` and `yay` to install stuff.
 
-I'm so tired today, so just wanted to backup this stuff...
+I got tired of i3 since wanted to learn to use my split keyboard, nvim and tmux. I was overwhelmed of so many commands to learn and first I got used to type in the Corne Keyboard, the move to nvim and finally I'm learning tmux. I'm not that productive yet as I am with Codium and Tilix/iTerm, but hopefully I will.
 
-Later I'll add dependencies and everything else.
+Maybe someday I'll go back to i3wm once I master tmux and neovim and became a terminal God (xd).
 
+
+```txt
          _nnnn_                      
         dGGGGMMb     ,"""""""""""""".
        @p~qp~~qMb    | Linux Rules! |
@@ -23,4 +25,5 @@ Later I'll add dependencies and everything else.
  |    `.       | `' \Zq
 _)      \.___.,|     .'
 \____   )MMMMMM|   .'
-     `-'       `--' hjm
+     `-'       `--' 
+```
