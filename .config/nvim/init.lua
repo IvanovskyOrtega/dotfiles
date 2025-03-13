@@ -250,7 +250,12 @@ require('telescope').setup{
 
 -- Configuración para nvim-tree
 require('nvim-tree').setup {
+  git = {
+    ignore = false,
+    enable = true,
+  },
   renderer = {
+    highlight_git = true,
     icons = {
       show = {
         file = true,
@@ -307,15 +312,17 @@ lspconfig.gopls.setup {
     }, bufnr)
 
     -- Autoformateo al guardar
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = "*.go",
-      callback = function()
-        vim.lsp.buf.format({ async = false })
-        vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
-      end
-    })
+   
   end
 }
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*.go",
+  callback = function()
+    vim.lsp.buf.format({ async = false })
+    vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
+  end
+})
 
 
 -- Keybindings comunes
